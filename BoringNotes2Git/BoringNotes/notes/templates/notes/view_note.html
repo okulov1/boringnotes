@@ -1,0 +1,32 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+
+
+<div class="container">
+    {% if notes %}
+
+    {% for note in notes %}
+    {% if note.is_published or note.author == request.user %}
+
+    <div class="col card shadow-sm card-body bn-mb">
+        <h4 class="card-text">{{ note.title }}</h4> <br>
+        <h6 class="card-text">{{ note.text|linebreaks }}</h6>
+        <small class="text-body-secondary">Автор: <a href="{% url 'user' note.author %}">{{ note.author }}</a><br> дата публикации: {{ note.time_create }} <br>
+        дата обновления: {{ note.time_update }}</small> <br>
+    </div>
+
+    {% else %}
+
+    <h1>Эта заметка в закрытом доступе :(</h1>
+
+    {% endif %}
+    {% endfor %}
+
+    {% else %}
+    <h1>Такой заметки не существует</h1>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+
+
+<div class="container">
+    {% for note in notes %}
+
+    <div class="col card shadow-sm card-body bn-mb">
+        <h4 class="card-text">{{ note.title }}</h4> <br>
+        <h6 class="card-text">{{ note.text|linebreaks|truncatewords:50 }}</h6>
+        <small class="text-body-secondary">Автор: <a href="{% url 'user' note.author %}">{{ note.author }}</a><br> дата публикации: {{ note.time_create }} <br>
+        дата обновления: {{ note.time_update }}</small> <br>
+        <div class="btn-group">
+            <a href="{% url 'view_note' note.pk %}"><button type="button" class="btn btn-sm btn-outline-secondary">Читать</button></a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

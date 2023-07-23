@@ -1,0 +1,22 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+    {% for note in notes %}
+
+    <div class="col card shadow-sm card-body bn-mb">
+        <h4 class="card-text">{{ note.title }}</h4> <br>
+        <h6 class="card-text">{{ note.text|linebreaks|truncatewords:100 }}</h6>
+        <small class="text-body-secondary">дата публикации: {{ note.time_create }} <br>
+        дата обновления: {{ note.time_update }}</small> <br>
+        <div class="btn-group">
+            <a href="{% url 'redact' note.pk %}" class="bn-b-ll"><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></a>
+            <a href="{% url 'delete' note.pk %}"><button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button></a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

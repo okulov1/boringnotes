@@ -1,0 +1,23 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+
+    {% if note.author == request.user %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-lg w-100">Сохранить</button>
+    </form>
+
+    {% else %}
+
+    <h1>Вы не являетесь автором этой заметки и не можете ее изменять</h1>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

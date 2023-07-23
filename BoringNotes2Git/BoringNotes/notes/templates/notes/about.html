@@ -1,0 +1,23 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+
+    <h3>
+        BoringNotes - сайт созданный в целях обучения. <br> <br>
+        Здесь можно писать свои заметки, выкладывать их в открытый доступ, делится ими с другими людьми. <br> <br>
+        На <a href="{% url 'home' %}">главной страничке</a> вы можете смотреть, изменять и удалять ваши заметки <br>
+        Во вкладке <a href="{% url 'contact' %}">обратной связи</a> вы можете отправить письмо админу с предложениями <br>
+        Во вкладке <a href="{% url 'all_notes' %}">всех заметок</a> вы можете читать все заметки в открытом доступе <br> <br>
+         <a href="https://github.com/okulov1" target="_blank">Git Hub админа</a> <br> <br>
+        
+        Front-end - <a href="https://getbootstrap.com/" target="_blank">bootstrap</a> <br> <br>
+
+        Нашли ошибку? Пишите <a href="{% url 'contact' %}">сюда</a>
+
+    </h3>
+
+</div>
+
+{% endblock %}

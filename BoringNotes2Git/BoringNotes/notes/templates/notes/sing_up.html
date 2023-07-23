@@ -1,0 +1,16 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <hr class="my-4">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Зарегистрироваться</button>
+    </form>
+    <br>
+    <a href="{% url 'log_in' %}">Войти</a>
+</div>
+
+{% endblock %}

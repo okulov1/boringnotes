@@ -1,0 +1,29 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+
+    {% if request.user.username %}
+
+    <form method="post">
+
+        {% csrf_token %}
+        {{ form.as_p }}
+    `
+        <hr class="my-4">
+
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Отправить</button>
+
+    </form>
+
+
+    {% else %}
+
+        <h1>Вы не авторизованы</h1>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

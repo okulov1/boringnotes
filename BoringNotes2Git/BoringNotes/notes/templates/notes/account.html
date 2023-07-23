@@ -1,0 +1,50 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+    <div class="list-group list-group-flush border-bottom scrollarea">
+
+        {% if user.username %}
+
+        <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Логин: @{{ user.username }}</h2>
+        </div>
+
+        <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Email: {{ user.email }}</h2>
+        </div>
+
+            {% if user.first_name %}
+                <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Имя: {{ user.first_name }}</h2>
+        </div>
+            {% endif %}
+
+            {% if user.last_name %}
+                <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Фамилия: {{ user.last_name }}</h2>
+        </div>
+            {% endif %}
+
+            <br>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'log_out' %}"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Выйти</button></a>
+                <a href="{% url 'user' user.username %}"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Посмотреть как user</button></a>
+                {% if user.is_staff %}
+                    <a href="{% url 'admin:index' %}"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Администрирование</button></a>
+                {% endif %}
+          </div>
+
+        {% else %}
+
+            <h1>Вы не авторизованы!</h1>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

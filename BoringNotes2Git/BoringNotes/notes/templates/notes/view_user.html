@@ -1,0 +1,28 @@
+{% extends 'notes/base.html' %}
+
+{% block main %}
+
+<div class="container">
+    <div class="list-group list-group-flush border-bottom scrollarea">
+
+        <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Логин: @{{ user.username }}</h2>
+        </div>
+
+            {% if user.first_name %}
+                <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Имя: {{ user.first_name }}</h2>
+        </div>
+            {% endif %}
+
+            {% if user.last_name %}
+                <div class="col card shadow-sm card-body bn-mb">
+            <h2 class="card-text">Фамилия: {{ user.last_name }}</h2>
+        </div>
+            {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
