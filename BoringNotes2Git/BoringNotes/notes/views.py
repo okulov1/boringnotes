@@ -4,27 +4,28 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import View, ListView, CreateView, DetailView
 
 from .forms import RegisterUserForm, LoginUserForm, ContactForm, RedactNoteForm
 from .models import *
 
 
-def index(request):
-    try:
-        notes = Notes.objects.filter(author=request.user).order_by('-time_update')
-    except:
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            notes = Notes.objects.filter(author=request.user).order_by('-time_update')
+        except:
+            context = {
+                'title': 'BoringNotes'
+            }
+            return render(request, 'notes/index_n.html', context=context)
+
         context = {
-            'title': 'BoringNotes'
+            'title': 'BoringNotes',
+            'notes': notes
         }
-        return render(request, 'notes/index_n.html', context=context)
 
-    context = {
-        'title': 'BoringNotes',
-        'notes': notes
-    }
-
-    return render(request, 'notes/index.html', context=context)
+        return render(request, 'notes/index.html', context=context)
 
 
 class NotesAbout(ListView):
@@ -107,40 +108,49 @@ class NotesAccount(ListView):
         return context
 
 
-def logout_user(request):
-    logout(request)
-    return redirect('log_in')
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('log_in')
 
 
-def contact(request):
-
-    if request.method == 'POST':
+class ContactView(View):
+    def post(self, request, *args, **kwargs):
         form = ContactForm(request.POST)
         if form.is_valid():
-            print('\n'*5 + str(form.cleaned_data | {'user': request.user.username}) + '\n'*5)
+            print('\n' * 5 + str(form.cleaned_data | {'user': request.user.username}) + '\n' * 5)
             return redirect('account')
-    else:
+
+        context = {
+            'title': 'BoringNotes - Обратная связь',
+            'form': form
+        }
+        return render(request, 'notes/contact.html', context=context)
+
+    def get(self, request, *args, **kwargs):
         form = ContactForm()
 
-    context = {
-        'title': 'BoringNotes - Обратная связь',
-        'form': form
-    }
-    return render(request, 'notes/contact.html', context=context)
+        context = {
+            'title': 'BoringNotes - Обратная связь',
+            'form': form
+        }
+        return render(request, 'notes/contact.html', context=context)
 
 
-def view_user(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        return redirect('home')
+class UserView(View):
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs['username']
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return redirect('home')
 
-    context = {
-        'title': f'BoringNotes - @{username}',
-        'user': user
-    }
+        context = {
+            'title': f'BoringNotes - @{username}',
+            'user': user
+        }
 
-    return render(request, 'notes/view_user.html', context=context)
+        return render(request, 'notes/view_user.html', context=context)
 
 
 def redact(request, note_id):

@@ -19,16 +19,16 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('', index, name='home'),
+    path('', IndexView.as_view(), name='home'),
     path('about/', NotesAbout.as_view(), name='about'),
     path('all-notes/', NotesAllNotes.as_view(), name='all_notes'),
     path('sing-up/', NotesSingUp.as_view(), name='sing_up'),
     path('log-in/', NotesLogIn.as_view(), name='log_in'),
     path('account/', NotesAccount.as_view(), name='account'),
-    path('log-out/', logout_user, name='log_out'),
+    path('log-out/', LogoutView.as_view(), name='log_out'),
     path('note/<int:note_id>/', NotesViewNote.as_view(), name='view_note'),
-    path('contact/', contact, name='contact'),
-    path('user/<slug:username>/', view_user, name='user'),
+    path('contact/', ContactView.as_view(), name='contact'),
+    path('user/<slug:username>/', UserView.as_view(), name='user'),
     path('redact/<int:note_id>', redact, name='redact'),
     path('add-note/', add_note, name='add_note'),
     path('delete/<int:note_id>/', delete_note, name='delete')
